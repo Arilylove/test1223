@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" type="text/css" href="__CSS__/common.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/adminMerchant.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/addrole.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/order_management.css">
+    <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+    <title></title>
+</head>
+
+<body class="bg">
+<div class="width-min">
+    <div class="head zoom_clear">
+        <img class="logo" src="__IMG__/shuyuan.png">
+
+        <ul class="nav zoom_clear">
+            <!-- <li>
+                <a href="javascript:void (0);">首页</a>
+            </li>
+            <li class="cur">
+                <a href="javascript:void (0);">系统</a>
+            </li> -->
+
+
+
+            <!--  <if condition="in_array('商户',$_SESSION['message'])">
+                  <li>
+                      <a href="{:url('merchant/index')}">商户</a>
+                  </li>
+              </if>
+              -->
+
+            <li>
+                <a href="{:url('car/base')}">车辆信息</a>
+            </li>
+
+            <li>
+                <a href="{:url('order/order')}">订单信息</a>
+            </li>
+
+            <li>
+                <a href="{:url('user/index')}">用户信息</a>
+            </li>
+
+
+        </ul>
+
+        <div class="people" href="javascript:void (0);">
+            <if condition="$_SESSION['adminUser']['name'] neq ''">
+                <a href=""></a>
+                <a href="{:url('login/out')}">退出</a>
+            <else/>
+                <img src="__IMG__/3.png">
+            </if>
+        </div>
+    </div>
+<script>
+$(function() {
+    var title=$('title').html();
+    var li1=$('.nav li > a').text();
+      // console.log(title)
+    $('.nav li > a').each(function(){
+        // console.log($(this).text())
+        if (title==$(this).text()) {
+            $(this).parent().addClass('cur');
+        }
+    })
+    
+
+
+
+});
+</script>

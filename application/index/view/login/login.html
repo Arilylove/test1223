@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" href="__CSS__/common.css">
+    <link rel="stylesheet" href="__CSS__/login.css">
+    <title>登录</title>
+</head>
+<body>
+<div class="main">
+    <div class="contend-kj">
+        <div class="contend">
+            <form method="post" name="login" action="{:url('login/login')}">
+            <div class="mod">
+                <span>账&nbsp;&nbsp;号：</span>
+                <input type="text" name="username">
+            </div>
+            <div class="mod">
+                <span>密&nbsp;&nbsp;码：</span>
+                <input type="password" name="password">
+            </div>
+            <div class="mod">
+                <span>验证码：</span>
+                <input class="width" type="text" name="code">
+                <img src="{:url('verify')}" onclick="javascript:this.src='{:url('verify')}?tm='+Math.random();"/>
+                <!--<img src="{:url('checkVerify')}" onclick="javascript:this.src='{:url('checkVerify')}?tm='+Math.random();"/>-->
+            </div>
+
+
+
+
+            <div class="buttons">
+                <!-- <a href="order_management.html">登 录</a> -->
+                
+                <button type="submit">登 录</button>
+                <!-- <button>取 消</button> -->
+                <a href="javascript:void (0);">取 消</a>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+
+    });
+    // $('img').click(function(){
+    //     $(this).attr("src", verifyimg+'&random='+Math.random());
+    // })
+</script>
+
+</html>

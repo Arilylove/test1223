@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>车辆修改</title>
+</head>
+<body>
+<form method="" action="{:url('car/editsave')}">
+    <input name="carno" type="hidden" value="{$car['carno']}"/>
+    车牌号：<input type="text" name="cardesc" value="{$car['cardesc']}"/><br/><br/>
+    座位数：<input type="text" name="seatnum" value="{$car['seatnum']}"/><br/><br/>
+    <input type="submit" value="修改"/>
+</form>
+</body>
+</html>

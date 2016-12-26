@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>车辆信息列表</title>
+</head>
+<body>
+<table align="center" border="1">
+    <tr>
+        <th>车辆编号</th>
+        <th>车牌号</th>
+        <th>座位数</th>
+        <th>操作</th>
+    </tr>
+    {volist name='data' id='v'}
+    <tr>
+        <td>{$v.carno}</td>
+        <td>{$v.cardesc}</td>
+        <td>{$v.seatnum}</td>
+        <td>
+            <a href="{:url('car/edit',['carno'=>$v.carno])}">修改</a>&nbsp;|&nbsp;
+            <a href="{:url('car/delete',['carno'=>$v.carno])}"><span onclick="return dele();">删除</span></a>
+        </td>
+    </tr>
+    {/volist}
+</table>
+</body>
+</html>
+<script type="text/javascript"></script>
+<script>
+   function dele(){
+       if(confirm('确定要删除此车辆信息吗？')){
+           return true;
+       }else{
+           return false;
+       }
+    }
+
+</script>
