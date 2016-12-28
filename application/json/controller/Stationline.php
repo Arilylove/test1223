@@ -20,7 +20,7 @@ class Stationline extends Base{
         //var_dump($sta);exit;
         if(!$sta->findByGps($station['st_gps'])){
             $this->setDesc("该位置站点已存在");
-            return 2;
+            return 3;
         }
         $sta->setStname($station['st_name']);
         $sta->setStgps($station['st_gps']);
@@ -98,20 +98,27 @@ class Stationline extends Base{
             $this->setDesc('有空参数');
             return 2;
         }
+        //$st_index=preg_replace('，',',',$st_index);
         $station=explode(",",$st_index);
         //var_dump($station);exit;
         foreach ($station as $k=>$v){
             $st=Db::table('station')->where('st_index',$v)->find();
             if(!$st){
                 $this->setDesc('站点不存在');
-                return 2;
+                return 3;
             }
         }
         $li=new Lines();
-        $li->setStation($station);
         $line=join("->",$station);
+        $li->setLine($line);
         //var_dump($line);exit;
-        $re=$li->addByIndex($station);
+        $find=$li->findByLine($line);
+        //var_dump($find);exit;
+        if(!$find){
+            $this->setDesc('线路已存在');
+            return 3;
+        }
+        $re=$li->addByIndex($line);
         if($re!=0){
             $this->setDesc('线路添加失败');
             return 3;
@@ -218,5 +225,70 @@ class Stationline extends Base{
         return $this->response($data,'json',200);
     }
 
-   
+    /*
+     * 输入起点和终点，知道有几条线路并将线路输出（但是是以当前输入的终点为输出的线路的终点）???????
+     * */
+    public function lineEnd(){
+        $index=input('param.index');
+        $start=substr($index,0,1);
+        $end=substr($index,-1);
+        $endLine=$this->startEnd($start,$end);
+        /*$starti=substr(substr($endLine,-2),-1);
+        $endi=substr($endLine,-1);
+        $endLine=substr($endLine,$starti,$endi+2*$endi+1);*/
+        var_dump($endLine);exit;
+        //var_dump($endLine);
+       /* if($endLine==NULL) {
+            $this->setDesc('未查找到该条线路');
+            return 3;
+        }*/
+
+    }
+
+    /*
+     * 起点、终点站经过的线路和位置，0表示起点站（第一站）
+     * */
+    public function startEnd($start,$end){
+        $line=Db::table('car_line')->select();
+        //var_dump($line);exit;
+        $num=count($line);
+        for($i=0;$i<$num;$i++){
+            $station=$line[$i]['line'];
+            $startLine=$this->centerLine($station,$start);
+            //var_dump($startLine);exit;
+            if($startLine){
+                $endLine=$this->centerLine($startLine,$end);
+                if($endLine){
+                    return  $endLine;
+                }
+            }
+        }
+        return NULL;
+
+    }
+    /*
+     * 输出站点线路
+     * */
+    public function centerLine($station,$end){
+        $stationLi=explode(" ",$station);
+        //var_dump($station);exit;
+        for($j=0;$j<count($stationLi);$j++) {
+            $sta = $stationLi[$j];
+            //var_dump($sta);exit;
+            $st = explode("->", $sta);
+            //var_dump($st);exit;
+            for ($k = 0; $k < count($st); $k++) {
+                $findIndex = $st[$k];
+                if($end == $findIndex){
+                    $endLine=$stationLi;
+                    for($l=0;$l<count($endLine);$l++){
+                        return $endLine[$l].'+'.$k;
+                    }
+                }
+            }
+        }
+        return NULL;
+    }
+
+
 }
